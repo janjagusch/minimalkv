@@ -155,6 +155,9 @@ def _create_store_redis(type, params):
 
     from minimalkv.memory.redisstore import RedisStore
 
+    # `StrictRedis` class does not understand `create_if_missing`.
+    params = {key: value for key, value in params.items() if key != "create_if_missing"}
+
     r = StrictRedis(**params)
     return RedisStore(r)
 
